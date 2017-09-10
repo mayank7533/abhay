@@ -1,3 +1,4 @@
+
 """
 Django settings for womensecurity project.
 
@@ -25,7 +26,8 @@ SECRET_KEY = 'lw7kd#u)#+cnm4c+*iev0e0vq%g5n0-fpp%vs&m2#srqpl%-n='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['13.126.238.174']
+
 
 
 # Application definition

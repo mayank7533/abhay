@@ -74,7 +74,7 @@ class UserLogin(APIView):
                 success = 1
                 responseDictionary['name'] = userObject.name
                 responseDictionary['interest'] = userObject.fieldOfInterest
-                responseDictionary['id'] = userObject.userId
+                responseDictionary['id'] = userObject.UserId
         if success == 1:
             return HttpResponse(json.dumps(responseDictionary))
         else:
@@ -93,8 +93,7 @@ class LocationUpdate(APIView):
                 location = str(lat)+","+str(long)
                 userObject.location = location
                 userObject.save()
-        temp = dict()
-        temp['status']='1'
+	temp = dict(temp['status']='1'
         return HttpResponse(json.dumps(temp))
 
 
@@ -136,8 +135,8 @@ class Message(APIView):
 
                 )
                 messageObject.save()
-        temp = dict()
-        temp['status']='1'
+	temp = dict()
+	temp['status']='1'
         return HttpResponse(json.dumps(temp))
 
 
@@ -159,8 +158,8 @@ class Sos(APIView):
                 f = urllib.request.urlopen(request, data)
                 fr = f.read()
                 print(fr)
-        temp = dict()
-        temp['status']='1'
+	temp = dict()
+	temp['status']='1'
         return HttpResponse(json.dumps(temp))
 
 
@@ -183,14 +182,13 @@ def register(request):
     password = request.POST['password']
     userId = request.POST['userId']
     verification = request.POST['verification']
-    verification = int(verification)
     contact = request.POST['contact']
     userObjects = User.objects.all()
 
     exists = 0
 
     for userObject in userObjects:
-        if userObject.userId == userId and int(userObject.verificationCode) == verification:
+        if userObject.userId == userId and userObject.verificationCode == verification:
             exists = 1
             parentObject = Parent.objects.create(
                 name = name,
