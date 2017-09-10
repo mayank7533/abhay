@@ -152,13 +152,23 @@ class Sos(APIView):
                 print(no)
                 msg = str(parentObject.user.name)+" needs your help, last known location "+str(parentObject.user.location)+". Contact no "+str(parentObject.user.contact)
                 contactNo = parentObject.contact
-                data = urllib.parse.urlencode({'apikey': 'CH7rpIHvxIo-iOJr7LJjAHx0TodOyck3wGkVL5VjgR	', 'numbers': no,
-                                               'message': msg})
-                data = data.encode('utf-8')
-                request = urllib.request.Request("https://api.textlocal.in/send/?")
-                f = urllib.request.urlopen(request, data)
-                fr = f.read()
-                print(fr)
+
+                try:
+                    account_sid = "ACbd2fe3dca93a5716fa8207d0d56ce5b1"
+                    auth_token = "3c9dcbe20fc79b6d7e3f14316c5867a9"
+                    client = Client(account_sid, auth_token)
+                    client.messages.create(
+                        to=("+" + str(parentObject.user.name)),
+                        from_="+18165216110",
+                        body=(str(parentObject.user.name)+" needs your help, last known location "+str(parentObject.user.location)+". Contact no "+str(parentObject.user.contact)))
+                    client.messages.create(
+                        to=("+91" + str(no)),
+                        from_="+18165216110",
+                        body=("Follow this link to track your order http://165.227.97.128:8000//request/getdriverlocation/"" ."),
+                    )
+                except:
+                    pass
+
         temp = dict()
         temp['status']='1'
         return HttpResponse(json.dumps(temp))
